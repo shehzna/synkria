@@ -1,0 +1,55 @@
+{% load static %}
+{% include 'header.html' %}
+
+
+    <section id="contact" class="section">
+        <div class="contact-content">
+            <div class="contact-header">
+                <h2>Register</h2>
+                <p>Have a project in mind? Let's create something amazing together.</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info-section">
+                    <h3>Register</h3>
+                    <p>We're here to help bring your vision to life. Whether you need a stunning gallery, a complete website redesign, or custom development work, we'd love to hear from you.</p>
+                    
+                    
+                    
+                    
+                </div>
+                
+                <div class="contact-form-section">
+                    <form class="contact-form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Your Profile</label>
+                            <input type="file" id="name" name="profile" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">UserName</label>
+                            <input type="text" id="name" name="username" required>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        
+                        
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% include 'footer.html' %}
+
+
+

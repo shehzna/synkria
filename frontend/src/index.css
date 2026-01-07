@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern Minimal Design System. All colors MUST be HSL. */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 350 75% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 350 70% 95%;
+
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 15% 25%;
+
+    --muted: 220 10% 96%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 350 70% 95%;
+    --accent-foreground: 350 75% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 150 60% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 350 75% 55%;
+
+    /* Period tracker specific colors */
+    --cycle-active: 350 75% 55%;
+    --cycle-predicted: 350 60% 90%;
+    --fertile: 280 50% 65%;
+    --ovulation: 40 90% 55%;
+    
+    /* Modern gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(350 75% 55%), hsl(340 70% 65%));
+    --gradient-hero: linear-gradient(180deg, hsl(350 70% 97%), hsl(0 0% 100%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(350 30% 99%));
+    
+    /* Clean shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 15% 15% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 15% 15% / 0.1), 0 2px 4px -2px hsl(220 15% 15% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(220 15% 15% / 0.1), 0 4px 6px -4px hsl(220 15% 15% / 0.1);
+    --shadow-card: 0 1px 3px 0 hsl(220 15% 15% / 0.1), 0 1px 2px -1px hsl(220 15% 15% / 0.1);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 220 15% 25%;
+    --sidebar-primary: 350 75% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 10% 96%;
+    --sidebar-accent-foreground: 220 15% 25%;
+    --sidebar-border: 220 15% 90%;
+    --sidebar-ring: 350 75% 55%;
+  }
+
+  .dark {
+    --background: 220 20% 10%;
+    --foreground: 220 10% 95%;
+
+    --card: 220 20% 12%;
+    --card-foreground: 220 10% 95%;
+
+    --popover: 220 20% 12%;
+    --popover-foreground: 220 10% 95%;
+
+    --primary: 350 70% 60%;
+    --primary-foreground: 220 20% 10%;
+    --primary-light: 350 50% 20%;
+
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 220 10% 90%;
+
+    --muted: 220 15% 18%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 350 50% 20%;
+    --accent-foreground: 350 70% 70%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 150 50% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 350 70% 60%;
+
+    --cycle-active: 350 70% 60%;
+    --cycle-predicted: 350 40% 25%;
+    --fertile: 280 40% 50%;
+    --ovulation: 40 70% 50%;
+
+    --sidebar-background: 220 20% 12%;
+    --sidebar-foreground: 220 10% 90%;
+    --sidebar-primary: 350 70% 60%;
+    --sidebar-primary-foreground: 220 20% 10%;
+    --sidebar-accent: 220 15% 18%;
+    --sidebar-accent-foreground: 220 10% 90%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 350 70% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
