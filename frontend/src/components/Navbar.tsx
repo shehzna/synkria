@@ -16,9 +16,9 @@ export const Navbar = () => {
   const navLinks = isAuthenticated
     ? [
         { path: '/dashboard', label: 'Home', icon: Home },
-        { path: '/profile', label: 'Profile', icon: User },
         { path: '/calendar', label: 'Calendar', icon: Calendar },
         { path: '/log', label: 'Log Data', icon: FileText },
+        { path: '/profile', label: 'Profile', icon: User },
       ]
     : [];
 
