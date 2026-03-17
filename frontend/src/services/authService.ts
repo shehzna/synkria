@@ -9,6 +9,7 @@ interface BackendAuthResponse {
     name: string;
     age?: number;
     cycle_length?: number;
+    is_staff?: boolean;
   };
 }
 
@@ -49,6 +50,7 @@ const transformBackendUser = (backendUser: any): User => ({
   cycleLength: backendUser.cycle_length,
   avatar: undefined,
   createdAt: new Date(),
+  is_staff: backendUser.is_staff,
 });
 
 

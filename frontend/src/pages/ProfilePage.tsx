@@ -8,13 +8,14 @@ import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { updateUser } from '@/store/slices/authSlice';
 import { setEditing, updateProfile } from '@/store/slices/userSlice';
 import { userService } from '@/services/userService';
-import { useState, useRef } from 'react';
-import { Camera, Save, X, User as UserIcon } from 'lucide-react';
+import { notificationService } from '@/services/notificationService';
+import { useState, useRef, useEffect } from 'react';
+import { Camera, Save, X, User as UserIcon, Calendar, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 
 export const ProfilePage = () => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
+  const { user, token } = useAppSelector((state) => state.auth);
   const { isEditing } = useAppSelector((state) => state.user);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -26,6 +27,26 @@ export const ProfilePage = () => {
   });
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [upcomingPrediction, setUpcomingPrediction] = useState<{
+    message: string;
+    predicted_date: string;
+    days_until: number;
+  } | null>(null);
+
+  // Fetch upcoming prediction
+  useEffect(() => {
+    const fetchPrediction = async () => {
+      if (token) {
+        try {
+          const prediction = await notificationService.checkImminentPrediction(token);
+          setUpcomingPrediction(prediction);
+        } catch (error) {
+          console.error('Failed to fetch prediction:', error);
+        }
+      }
+    };
+    fetchPrediction();
+  }, [token]);
 
   const handleEdit = () => {
     dispatch(setEditing(true));
@@ -106,12 +127,12 @@ export const ProfilePage = () => {
             {/* Avatar Section */}
             <div className="flex flex-col items-center mb-8">
               <div className="relative">
-                <Avatar 
+                <Avatar
                   className="w-24 h-24 cursor-pointer transition-transform hover:scale-105"
                   onClick={handleAvatarClick}
                 >
-                  <AvatarImage 
-                    src={avatarPreview || user?.avatar || userService.generateDefaultAvatar(user?.name || 'User')} 
+                  <AvatarImage
+                    src={avatarPreview || user?.avatar || userService.generateDefaultAvatar(user?.name || 'User')}
                   />
                   <AvatarFallback className="bg-primary text-primary-foreground text-2xl">
                     {getInitials(user?.name || 'U')}
@@ -214,6 +235,53 @@ export const ProfilePage = () => {
               </div>
             </div>
           </Card>
+
+          {/* Upcoming Period Prediction */}
+          {upcomingPrediction && (
+            <Card className="p-6 border-2 border-primary/20 shadow-lg bg-gradient-to-br from-primary/5 to-primary/10">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/10 rounded-full">
+                  <Calendar className="w-6 h-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-foreground mb-1">
+                    Upcoming Period
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Based on your cycle prediction
+                  </p>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="flex items-center gap-2 p-3 bg-background/50 rounded-lg">
+                      <Calendar className="w-5 h-5 text-primary" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Predicted Date</p>
+                        <p className="font-semibold text-foreground">
+                          {new Date(upcomingPrediction.predicted_date).toLocaleDateString('en-US', {
+                            month: 'long',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 p-3 bg-background/50 rounded-lg">
+                      <Clock className="w-5 h-5 text-primary" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Days Until</p>
+                        <p className="font-semibold text-foreground">
+                          {upcomingPrediction.days_until === 0
+                            ? 'Today'
+                            : upcomingPrediction.days_until === 1
+                              ? 'Tomorrow'
+                              : `${upcomingPrediction.days_until} days`}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          )}
 
           {/* Account Stats */}
           <div className="grid gap-4 sm:grid-cols-3">

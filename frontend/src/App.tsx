@@ -8,6 +8,7 @@ import { store } from "@/store";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { initializeAuth } from "@/store/slices/authSlice";
 import { useEffect } from "react";
+import { NotificationBanner } from "@/components/NotificationBanner";
 
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
@@ -16,6 +17,9 @@ import { Dashboard } from "./pages/Dashboard";
 import { CalendarPage } from "./pages/CalendarPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { DataCollectionPage } from "./pages/DataCollectionPage";
+import { PredictionPage } from "./pages/PredictionPage";
+import { PCODPredictionPage } from "./pages/PCODPredictionPage";
+import { AdminDashboard } from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
@@ -30,21 +34,33 @@ const AuthRoute = ({ children }: { children: React.ReactNode }) => {
 
 const AppRoutes = () => {
   const dispatch = useAppDispatch();
-  useEffect(() => { dispatch(initializeAuth()); }, [dispatch]);
+  const { isAuthenticated, token } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(initializeAuth());
+  }, [dispatch]);
 
   return (
-    <Routes>
-      <Route path="/" element={<AuthRoute><Home /></AuthRoute>} />
-      <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
-      <Route path="/signup" element={<AuthRoute><Signup /></AuthRoute>} />
-      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-      <Route path="/calendar" element={<ProtectedRoute><CalendarPage /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-      <Route path="/log" element={<ProtectedRoute><DataCollectionPage /></ProtectedRoute>} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <NotificationBanner />
+      <Routes>
+        <Route path="/" element={<AuthRoute><Home /></AuthRoute>} />
+        <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
+        <Route path="/signup" element={<AuthRoute><Signup /></AuthRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/calendar" element={<ProtectedRoute><CalendarPage /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/predict" element={<ProtectedRoute><PredictionPage /></ProtectedRoute>} />
+        <Route path="/pcod-predict" element={<ProtectedRoute><PCODPredictionPage /></ProtectedRoute>} />
+        <Route path="/log" element={<ProtectedRoute><DataCollectionPage /></ProtectedRoute>} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 };
+
+import { Chatbot } from "./components/Chatbot";
 
 const App = () => (
   <Provider store={store}>
@@ -54,6 +70,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <AppRoutes />
+          <Chatbot />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

@@ -13,13 +13,21 @@ export const Navbar = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const userLinks = [
+    { path: '/dashboard', label: 'Home', icon: Home },
+    // { path: '/calendar', label: 'Calendar', icon: Calendar },
+    // { path: '/log', label: 'Log Data', icon: FileText },
+    { path: '/predict', label: 'Predict Cycle', icon: Calendar },
+    { path: '/pcod-predict', label: 'PCOD Check', icon: FileText },
+    { path: '/profile', label: 'Profile', icon: User },
+  ];
+
+  const adminLinks = [
+    { path: '/admin-dashboard', label: 'Dashboard', icon: Home },
+  ];
+
   const navLinks = isAuthenticated
-    ? [
-        { path: '/dashboard', label: 'Home', icon: Home },
-        { path: '/calendar', label: 'Calendar', icon: Calendar },
-        { path: '/log', label: 'Log Data', icon: FileText },
-        { path: '/profile', label: 'Profile', icon: User },
-      ]
+    ? (user?.is_staff ? adminLinks : userLinks)
     : [];
 
   const handleLogout = () => {
@@ -30,7 +38,7 @@ export const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        <Link to={isAuthenticated ? '/dashboard' : '/'} className="flex items-center gap-2">
+        <Link to={isAuthenticated ? (user?.is_staff ? '/admin-dashboard' : '/dashboard') : '/'} className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-lg">S</span>
           </div>

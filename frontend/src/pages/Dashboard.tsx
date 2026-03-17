@@ -71,12 +71,7 @@ export const Dashboard = () => {
               <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Hello, {user?.name || 'there'}! 👋</h1>
               <p className="text-muted-foreground">Here's your cycle overview and analytics</p>
             </div>
-            <Link to="/log">
-              <Button className="bg-gradient-primary hover:opacity-90">
-                <Plus className="w-4 h-4 mr-2" />
-                Log Period
-              </Button>
-            </Link>
+            
           </div>
 
           {/* Quick Stats Cards */}

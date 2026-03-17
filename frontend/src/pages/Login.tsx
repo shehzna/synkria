@@ -14,7 +14,7 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -25,7 +25,13 @@ export const Login = () => {
     const result = await dispatch(login({ email, password }));
     if (login.fulfilled.match(result)) {
       toast({ title: 'Welcome back!', description: 'You have successfully logged in.' });
-      navigate('/dashboard');
+
+      const user = result.payload.user;
+      if (user.is_staff) {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/dashboard');
+      }
     }
   };
 

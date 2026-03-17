@@ -17,6 +17,12 @@ urlpatterns = [
     path('api/auth/profile/', api_views.user_profile, name='api-profile'),
     path('api/auth/token/refresh/', api_views.token_refresh, name='token-refresh'),
     path('api/auth/health/', api_views.health_check, name='api-health'),
+    path('api/chatbot/', api_views.chatbot_query, name='api-chatbot'),
+    path('api/predict/', api_views.predict_cycle_view, name='api-predict'),
+    path('api/predict-pcod/', api_views.predict_pcod_view, name='api-predict-pcod'),
+    path('api/check-imminent-prediction/', api_views.check_imminent_prediction_view, name='api-check-imminent'),
+    path('api/admin/users/', api_views.user_list_view, name='api-admin-users'),
+    path('api/admin/users/<int:user_id>/toggle-status/', api_views.toggle_user_status, name='api-admin-toggle-status'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

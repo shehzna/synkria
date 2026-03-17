@@ -7,6 +7,7 @@ export interface User {
   age?: number;
   cycleLength?: number;
   createdAt: Date;
+  is_staff?: boolean;
 }
 
 // Authentication types

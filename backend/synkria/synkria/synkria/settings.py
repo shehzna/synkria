@@ -49,11 +49,12 @@ MIDDLEWARE = [
 # CORS (React @ 8080)
 # ---------------------------------------------------
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "http://127.0.0.1:8080",
-]
 
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost(:[0-9]+)?$",
+    r"^http://127\.0\.0\.1(:[0-9]+)?$",
+]
+CORS_ALLOW_ALL_ORIGINS = True # Temporary for debugging
 CORS_ALLOW_CREDENTIALS = True
 
 # ---------------------------------------------------
@@ -114,6 +115,16 @@ WSGI_APPLICATION = 'synkria.wsgi.application'
 
 # ---------------------------------------------------
 # Database (SQLite)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'your_database_name',
+        'USER': 'root',
+        'PASSWORD': 'your_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 # ---------------------------------------------------
 
 DATABASES = {
@@ -132,6 +143,14 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+]
+
+# ---------------------------------------------------
+# Custom Authentication Backend
+# ---------------------------------------------------
+
+AUTHENTICATION_BACKENDS = [
+    'kria.backends.EmailBackend',
 ]
 
 # ---------------------------------------------------
